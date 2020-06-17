@@ -29,8 +29,7 @@
 ################################################################################
 
 # Target board/hardware
-TARGET=CY8CPROTO-062-4343W
-
+TARGET=CY8CKIT-062-BLE
 # Name of application (used to derive name of final linked file).
 APPNAME=mtb-example-psoc6-capsense-buttons-slider
 
@@ -113,13 +112,15 @@ LDFLAGS=
 LDLIBS=
 
 # Path to the linker script to use (if empty, use the default linker script).
-LINKER_SCRIPT=
+LINKER_SCRIPT=dfu_cm4_app1.ld
 
 # Custom pre-build commands to run.
 PREBUILD=
 
 # Custom post-build commands to run.
-POSTBUILD=
+POSTBUILD="$(CY_MCUELFTOOL_DIR)/bin/cymcuelftool.exe" --sign $(CY_CONFIG_DIR)/$(APPNAME).elf CRC --output $(APPNAME)_crc.elf && \
+       "$(CY_MCUELFTOOL_DIR)/bin/cymcuelftool.exe" -P $(APPNAME)_crc.elf --output $(APPNAME)_crc.cyacd2
+
 
 
 ################################################################################
